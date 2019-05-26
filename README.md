@@ -15,10 +15,11 @@ You define the response structure in your Insomnia environment.
 ```
 {
     "TEST_ENV": {
+        "test-group-key": "Key under which the JSON object of requests sits"
         "response-structure": {
-            "field-name1": "JSON path",
-            "field-name2": "JSON path",
-            "field-name3": "JSON path"
+            "field-name1": "JSON path string",
+            "field-name2": "JSON path string",
+            "field-name3": "JSON path string"
         }
     }
 }
