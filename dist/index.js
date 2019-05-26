@@ -10,9 +10,11 @@ function requestHook(context) {
         return;
     }
     try {
-        response_structure_processor.processStructure(testConfig[config_1.RESPONSE_STRUCTURE_KEY], context.request)
+        const structured_response = response_structure_processor.processStructure(testConfig[config_1.RESPONSE_STRUCTURE_KEY], context.request);
+        context.request.setBodyText(structured_response);
     } catch (error) {
         logger_1.log(`Need valid response structure defined under ${config_1.RESPONSE_STRUCTURE_KEY}`)
+        return;
     }
 }
 exports.requestHooks = [requestHook];
