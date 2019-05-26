@@ -1,12 +1,12 @@
 # insomnia-plugin-testing
 
-## Installation
+## Installation (not on npm yet)
 1. Open your preferences in Insomnia
 2. Type `insomnia-plugin-testing`
 3. Click 'Install Plugin'
 
 ## Usage
-Forms a testing environment that returns predefined properties from all requests (all requests must have the same response structure).
+Forms a testing environment that returns predefined properties from all requests (all requests must have the same response structure). At the moment, it must be pointed to an end point that returns the request or stores the request for the user to analyse.
 
 The request body is JSON with a key of a reference name for the request and a value of a raw body response hooks to the corresponding requests you wish to test. The trigger behaviour must be set to always for the intended behaviour of running the requests automatically. Selecting other triggers will just collate the most recent runs together.
 
