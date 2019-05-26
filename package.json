@@ -6,7 +6,7 @@
   "files": ["dist"],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/StuartChartersE22/insomnia-plugin-testing"
   },
   "license": "MIT",
   "devDependencies": {
