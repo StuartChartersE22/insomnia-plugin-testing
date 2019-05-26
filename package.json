@@ -1,0 +1,19 @@
+{
+  "name": "insomnia-plugin-testing",
+  "version": "0.0.1",
+  "description": "An Insomnia plugin for a testing environment through chaining requests",
+  "main": "dist/index.js",
+  "files": ["dist"],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^10.12.0",
+    "typescript": "^3.1.3"
+  },
+  "insomnia": {
+    "name": "testing"
+  }
+}
