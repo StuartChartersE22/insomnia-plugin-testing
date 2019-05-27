@@ -1,6 +1,6 @@
 # insomnia-plugin-testing
 
-## Installation (not on npm yet)
+## Installation
 1. Open your preferences in Insomnia
 2. Type `insomnia-plugin-testing`
 3. Click 'Install Plugin'
