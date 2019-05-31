@@ -20,7 +20,7 @@ The request body is JSON with a key of a reference name for the request and a va
 }
 ```
 
-You define the response structure in your Insomnia environment.
+You define the response structure in your Insomnia environment. This will be the structure of the results value under the key defined test-group-key.
 
 ```
 {

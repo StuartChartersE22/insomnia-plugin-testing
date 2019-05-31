@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../logger");
-const jsonProcessor = require("./json-path");
+const jsonProcessor = require("../helpers/json-path");
 
 function processStructure(structureConfig, testRequests){
     logger_1.log(`Start processing`)
