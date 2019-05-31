@@ -5,17 +5,23 @@
 2. Type `insomnia-plugin-testing`
 3. Click 'Install Plugin'
 
-## Usage
-Forms a testing environment that returns predefined properties from all requests (all requests must have the same response structure). At the moment, it must be pointed to an end point that returns the request or stores the request for the user to analyse.
+# Goal
 
-The request body is JSON with a key of a reference name for the request and a value of a raw body response hooks to the corresponding requests you wish to test. The trigger behaviour must be set to always for the intended behaviour of running the requests automatically. Selecting other triggers will just collate the most recent runs together.
+This plugin is designed to provide a group of functionality that can be configured and used to help test single or multiple requests that are stored in a your Insomnia environment. The functionality can also be used seperately to enhance the overall usage of Insomnia.
+
+# Test Request Formatter
+
+This takes a JSON object under an environment defined key and runs through each key in the section to transform the corresponding JSON value into environment defined fields with values derived by JSON paths. This can be used to digest multiple existing requests who have the same response structure through the use of the [Insomnia Chaining Requests](https://support.insomnia.rest/article/43-chaining-requests "Insomnia chaining requests article") with response reference type "Raw Body".
+
+## Usage
+The request body is JSON with a key of a reference name and a value of JSON. This can be set up to trigger existing request to run by setting the value JSON to be a Response hook with response reference type of "Raw Body" and trigger behaviour of "Always".
 
 ```
 {
     "Key defined in the Insomnia environment under test-group-key": {
-        "Reference test name1": Response1 hook raw body,
-        "Reference test name2": Response2 hook raw body,
-        "Reference test name3": Response3 hook raw body
+        "Reference name1": JSON1,
+        "Reference name2": JSON2,
+        "Reference name3": JSON3
     }
 }
 ```
@@ -35,7 +41,7 @@ You define the response structure in your Insomnia environment. This will be the
 }
 ```
 
-# Google Sheet Helper
+# Google Sheet Posting Helper
 
 Included in the testing plugin is a Google sheet helper, which will output the test results to a Google Sheet. This can also be used as stand alone functionality. It can be plugged in serperately as well using [insomnia-plugin-google-sheets-helper](https://github.com/StuartChartersE22/insomnia-plugin-google-sheets-helper "Google Sheets helper plugin").
 
