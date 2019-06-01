@@ -47,12 +47,13 @@ function test_formatter(context) {
 
 function send_to_sheet(context) {
     const initial_request = context.request;
-    const sheet_config = config_1.getGHelperConfig(context.request);
-    if (!sheet_config) {
+    const initial_request_url = initial_request.getUrl();
+    if (!initial_request_url.match(/^http:\/\/g\-sheet\-request\[\d+\]$/i)) {
         return;
     }
-    const initial_request_url = initial_request.getUrl();
-    if (initial_request_url !== "http://g-sheet-request") {
+    const sheet_option_number = Number(initial_request_url.substring(initial_request_url.indexOf("[") + 1, initial_request_url.indexOf("]")));
+    const sheet_config = config_1.getTestEnvironmentConfig(initial_request)[sheet_option_number];
+    if (!sheet_config) {
         return;
     }
     logger_1.log(`Start g helper`);

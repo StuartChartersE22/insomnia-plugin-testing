@@ -54,6 +54,7 @@ To turn on, the "assert-equality" environment variable is present and set to tru
 In the body of the request, the value of each reference name is set to an array with the JSON to be tested first and a JSON object containing the expected results second. If no expected value JSON given then no assertions are made for that reference. If the JSON path for the testing JSON isn't expected to bring anything back, its value will be "not present". To assert equality, both results of JSON paths are stringified by JSON and compared through strict equality.
 
 Optional environmental fields:
+
 __"result-reporting":__
 - "DEFAULT" (or unexpected value) returns the unspecified behaviour. The boolean result is added with the key "\[field-name\]-matches".
 - "REDUCED" only reports "\[field-name\]-matches"
@@ -63,6 +64,7 @@ __"report-metrics":__
 Set to true wiil add a key of "metrics" under the test group key. The value is a JSON object of "passed-assertions", "failed-assertions", "skipped-values", and "skipped-references" all with totals of those events.
 
 Request:
+
 ```
 {
     "Key defined in the Insomnia environment under test-group-key": {
@@ -74,6 +76,7 @@ Request:
 ```
 
 Environment:
+
 ```
 {
     "TEST_ENV": {
@@ -100,6 +103,7 @@ Allows easy insertion of a JSON structure to a Google sheet whose ID is specifie
 The JSON structure will be converted to key value pairs being in adjacent columns. JSON objects as values will leave space in the key column and populate down the value column. JSON objects will cascade through repeating the pattern described, moving across the columns as the tree gets deeper. Currently limited to maximum right column of ZZ.
 
 Request JSON:
+
 ```
 {
     "Top": {
@@ -113,6 +117,7 @@ Request JSON:
 }
 ```
 Corresponding sheet layout:
+
 ```
 ----------------------------------------
 | Top | Child1 | String       |        |
@@ -127,13 +132,19 @@ Corresponding sheet layout:
 ----------------------------------------
 ```
 
-The end point must be set to PUT "g-sheet-request" for the intended request to be picked up. The actual request URL is automatically generated from the Sheet's ID. It will be the [Google spreadsheets.values.update end point](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/update).
+The end point must be set to PUT "g-sheet-request\[setting option number\]" for the intended request to be picked up. The actual request URL is automatically generated from the Sheet's ID. It will be the [Google spreadsheets.values.update end point](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/update).
 
 ```
 {
-    "G_SHEET_HELPER": {
-        "sheet-id": "String",
-        "top-left-coord": "A1" (optional)
-    }
+    "G_SHEET_HELPER": [
+        {
+            "sheet-id": "String1",
+            "top-left-coord": "A1" (optional)
+        },
+        {
+            "sheet-id": "String2",
+            "top-left-coord": "C4" (optional)
+        }
+    ]
 }
 ```
