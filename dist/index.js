@@ -2,15 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const config_1 = require("./config");
 const response_structure_processor = require("./testing-environment/response-structure");
+const result_asserter = require("./testing-environment/result_asserter");
 const logger_1 = require("./logger");
-const g_request_processor = require("./google-sheets-helper/request_formatter")
+const g_request_processor = require("./google-sheets-helper/request_formatter");
 
 function requestHook(context) {
-    test_runner(context);
+    test_formatter(context);
     send_to_sheet(context);
 }
 
-function test_runner(context) {
+function test_formatter(context) {
     const testConfig = config_1.getTestEnvironmentConfig(context.request);
     if (!testConfig) {
         return;
@@ -21,18 +22,23 @@ function test_runner(context) {
     if (!jsonBody) {
         return;
     }
-    const testRequests = jsonBody[testRequestsKey];
+    var testRequests = jsonBody[testRequestsKey];
     if (!testRequests){
         return;
     }
     logger_1.log(`Start testing`);
-    try {
-        const structured_response = response_structure_processor.processStructure(testConfig[config_1.RESPONSE_STRUCTURE_KEY], testRequests);
-        jsonBody[testRequestsKey] = structured_response;
-        context.request.setBodyText(JSON.stringify(jsonBody));
-    } catch (error) {
-        logger_1.log(`response_structure_processor.processStructure failed`)
+    var structure_config = testConfig[config_1.RESPONSE_STRUCTURE_KEY];
+    if (testConfig["assert-equality"]) {
+        const reformatted_details = result_asserter.extract_assertion_details(testRequests, structure_config);
+        testRequests = reformatted_details[0];
+        structure_config = reformatted_details[1];
     }
+    var structured_response = response_structure_processor.processStructure(testRequests, structure_config);
+    if (testConfig["assert-equality"]) {
+        structured_response = result_asserter.assert_expected(structured_response);
+    }
+    jsonBody[testRequestsKey] = structured_response;
+    context.request.setBodyText(JSON.stringify(jsonBody));
     return;
 }
 

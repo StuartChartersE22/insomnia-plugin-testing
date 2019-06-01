@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../logger");
 const jsonProcessor = require("../helpers/json-path");
 
-function processStructure(structureConfig, testRequests){
+function processStructure(testRequests, structureConfig){
     logger_1.log(`Start processing`)
     var structuredResponse = {};
     Object.entries(testRequests).forEach(([name, testRequest]) => {
@@ -15,7 +15,6 @@ function processStructure(structureConfig, testRequests){
                 testRequestResult[key] = "";
             }
         });
-        logger_1.log(`test request result: ${testRequestResult}`)
         structuredResponse[name] = testRequestResult;
     });
     return structuredResponse;
