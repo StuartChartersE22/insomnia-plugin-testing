@@ -52,7 +52,8 @@ function send_to_sheet(context) {
         return;
     }
     const sheet_option_number = Number(initial_request_url.substring(initial_request_url.indexOf("[") + 1, initial_request_url.indexOf("]")));
-    const sheet_config = config_1.getTestEnvironmentConfig(initial_request)[sheet_option_number];
+    const sheet_config = config_1.getGHelperConfig(initial_request)[sheet_option_number];
+    logger_1.log(`sheet_config: ${JSON.stringify(sheet_config)}`);
     if (!sheet_config) {
         return;
     }
