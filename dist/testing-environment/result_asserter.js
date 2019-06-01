@@ -38,7 +38,7 @@ function extract_assertion_details(request_json, structure_config){
     return [testing_json, testing_json_paths];
 }
 
-function assert_expected(test_results, reporting_mode) {
+function assert_expected(test_results, reporting_mode, report_metrics) {
     logger_1.log(`Asserting`);
     var passed_assertions = 0;
     var failed_assertions = 0;
@@ -68,7 +68,6 @@ function assert_expected(test_results, reporting_mode) {
                         break;
                     case "VERBOSE":
                         test_results[name][`${key}-expected`] = expected_value;
-                        break;
                     default:
                         break;
                 }
@@ -78,7 +77,9 @@ function assert_expected(test_results, reporting_mode) {
             assertion_result ? passed_assertions ++ : failed_assertions ++;
         });
     });
-    logger_1.log(`Assertion results:\nPassed: ${passed_assertions}\nFailed: ${failed_assertions}\nSkipped Values: ${skipped_values}\nSkipped References: ${skipped_references}`);
+    const metrics = {"passed-assertions": passed_assertions, "failed-assertions": failed_assertions, "skipped-values": skipped_values, "skipped-references": skipped_references};
+    logger_1.log(JSON.stringify(metrics));
+    if (report_metrics) test_results["metrics"] = metrics;
     return test_results;
 }
 

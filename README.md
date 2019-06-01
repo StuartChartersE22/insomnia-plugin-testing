@@ -53,10 +53,14 @@ To turn on, the "assert-equality" environment variable is present and set to tru
 
 In the body of the request, the value of each reference name is set to an array with the JSON to be tested first and a JSON object containing the expected results second. If no expected value JSON given then no assertions are made for that reference. If the JSON path for the testing JSON isn't expected to bring anything back, its value will be "not present". To assert equality, both results of JSON paths are stringified by JSON and compared through strict equality.
 
-There is an optional field "result-reporting":
+Optional environmental fields:
+__"result-reporting":__
 - "DEFAULT" (or unexpected value) returns the unspecified behaviour. The boolean result is added with the key "\[field-name\]-matches".
 - "REDUCED" only reports "\[field-name\]-matches"
 - "VERBOSE" returns the expected value under the key "\[field-name\]-expected".  
+
+__"report-metrics":__
+Set to true wiil add a key of "metrics" under the test group key. The value is a JSON object of "passed-assertions", "failed-assertions", "skipped-values", and "skipped-references" all with totals of those events.
 
 Request:
 ```
@@ -75,7 +79,8 @@ Environment:
     "TEST_ENV": {
         "test-group-key": "Key under which the JSON object of requests sits",
         "assert-equality": true,
-        "result-reporting": "DEFAULT" / "REDUCED" / "VERBOSE" (optional)
+        "result-reporting": "DEFAULT" / "REDUCED" / "VERBOSE", (optional)
+        "report-metrics": true, (optional),
         "response-structure": {
             "field-name1": ["testing JSON path", "expected JSON path"],
             "field-name2": ["testing JSON path", "expected JSON path"],

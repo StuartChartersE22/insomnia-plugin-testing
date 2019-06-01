@@ -36,7 +36,8 @@ function test_formatter(context) {
     var structured_response = response_structure_processor.processStructure(testRequests, structure_config);
     if (testConfig[config_1.ASSERTING_KEY]) {
         const reporting_mode = testConfig[config_1.RESULT_REPORTING_KEY];
-        structured_response = result_asserter.assert_expected(structured_response, reporting_mode);
+        const report_metrics = testConfig[config_1.REPORT_METRICS_KEY];
+        structured_response = result_asserter.assert_expected(structured_response, reporting_mode, report_metrics);
     }
     jsonBody[testRequestsKey] = structured_response;
     context.request.setBodyText(JSON.stringify(jsonBody));
