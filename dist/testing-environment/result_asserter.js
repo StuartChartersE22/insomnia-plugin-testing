@@ -7,7 +7,7 @@ var expected_json_structure = {};
 var expected_json_path_json = {};
 
 function extract_assertion_details(request_json, structure_config){
-    logger_1.log(`start extracting`);
+    logger_1.log(`Extracting assertion details`);
     var testing_json = {};
     Object.entries(request_json).forEach(([key, assertion_array]) => {
         if (assertion_array.length === 2) {
@@ -34,19 +34,26 @@ function extract_assertion_details(request_json, structure_config){
             testing_json_paths[key] = required_json_paths;
         }
     });
+    logger_1.log(`Assertion details extracted`);
     return [testing_json, testing_json_paths];
 }
 
-function assert_expected(test_results) {
-    logger_1.log(`start asserting`);
+function assert_expected(test_results, reporting_mode) {
+    logger_1.log(`Asserting`);
+    var passed_assertions = 0;
+    var failed_assertions = 0;
+    var skipped_values = 0;
+    var skipped_references = 0;
     Object.entries(test_results).forEach(([name, results]) => {
         var expected_json = expected_json_structure[name];
         if (typeof expected_json === "undefined") {
+            skipped_references ++;
             return;
         }
         Object.entries(results).forEach(([key, value]) => {
             const expected_json_path = expected_json_path_json[key];
             if (typeof expected_json_path === "undefined") {
+                skipped_values ++;
                 return;
             }
             var expected_value = json_processor.jsonPath(expected_json, expected_json_path);
@@ -54,9 +61,24 @@ function assert_expected(test_results) {
                 expected_value = "not present";
             }
             // logger_1.log(`test: ${JSON.stringify(value)}, expected: ${JSON.stringify(expected_value)}`)
-            test_results[name][`${key}-matches`] = JSON.stringify(value) === JSON.stringify(expected_value);
+            if (reporting_mode) {
+                switch (reporting_mode.toUpperCase()) {
+                    case "REDUCED":
+                        delete test_results[name][key];
+                        break;
+                    case "VERBOSE":
+                        test_results[name][`${key}-expected`] = expected_value;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            const assertion_result = JSON.stringify(value) === JSON.stringify(expected_value);
+            test_results[name][`${key}-matches`] = assertion_result;
+            assertion_result ? passed_assertions ++ : failed_assertions ++;
         });
     });
+    logger_1.log(`Assertion results:\nPassed: ${passed_assertions}\nFailed: ${failed_assertions}\nSkipped Values: ${skipped_values}\nSkipped References: ${skipped_references}`);
     return test_results;
 }
 

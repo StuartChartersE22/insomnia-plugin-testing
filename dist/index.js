@@ -28,17 +28,19 @@ function test_formatter(context) {
     }
     logger_1.log(`Start testing`);
     var structure_config = testConfig[config_1.RESPONSE_STRUCTURE_KEY];
-    if (testConfig["assert-equality"]) {
+    if (testConfig[config_1.ASSERTING_KEY]) {
         const reformatted_details = result_asserter.extract_assertion_details(testRequests, structure_config);
         testRequests = reformatted_details[0];
         structure_config = reformatted_details[1];
     }
     var structured_response = response_structure_processor.processStructure(testRequests, structure_config);
-    if (testConfig["assert-equality"]) {
-        structured_response = result_asserter.assert_expected(structured_response);
+    if (testConfig[config_1.ASSERTING_KEY]) {
+        const reporting_mode = testConfig[config_1.RESULT_REPORTING_KEY];
+        structured_response = result_asserter.assert_expected(structured_response, reporting_mode);
     }
     jsonBody[testRequestsKey] = structured_response;
     context.request.setBodyText(JSON.stringify(jsonBody));
+    logger_1.log(`Finished testing`)
     return;
 }
 
@@ -53,10 +55,10 @@ function send_to_sheet(context) {
         return;
     }
     logger_1.log(`Start g helper`);
-    const sheet_id = sheet_config["sheet-id"];
+    const sheet_id = sheet_config[config_1.SHEET_ID_KEY];
     var top_left_a1 = "a1"
-    if (sheet_config["top-left-coord"]){
-        top_left_a1 = sheet_config["top-left-coord"].toLowerCase();
+    if (sheet_config[config_1.TOP_LEFT_COORD_KEY]){
+        top_left_a1 = sheet_config[config_1.TOP_LEFT_COORD_KEY].toLowerCase();
     }
     const body = initial_request.getBodyText();
     const json_body = JSON.parse(body);
@@ -67,6 +69,7 @@ function send_to_sheet(context) {
     const formatted_body = g_request_processor.format_body(json_body, [0,0]);
     // logger_1.log(`Formatted body: ${JSON.stringify(formatted_body)}`)
     context.request = g_request_processor.format_request(sheet_id, formatted_body, initial_request, top_left_a1);
+    logger_1.log(`Finished g helper`);
     return;
 }
 
