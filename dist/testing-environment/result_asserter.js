@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../logger");
-const json_processor = require("../helpers/json-path");
+const JSONPath = require('JSONPath');
 
 var expected_json_structure = {};
 var expected_json_path_json = {};
@@ -56,7 +56,7 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                 skipped_values ++;
                 return;
             }
-            var expected_value = json_processor.jsonPath(expected_json, expected_json_path);
+            var expected_value = JSONPath.eval(expected_json, expected_json_path);
             if (expected_value === false) {
                 expected_value = "not present";
             }

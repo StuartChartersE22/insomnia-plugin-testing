@@ -3,7 +3,9 @@
   "version": "3.0.0",
   "description": "An Insomnia plugin for a testing environment through chaining requests",
   "main": "dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/StuartChartersE22/insomnia-plugin-testing"
@@ -16,5 +18,14 @@
   "insomnia": {
     "name": "testing"
   },
-  "keywords": ["Insomnia", "API Testing", "Insomnia plugin", "Google Sheets", "insomnia-plugin"]
+  "keywords": [
+    "Insomnia",
+    "API Testing",
+    "Insomnia plugin",
+    "Google Sheets",
+    "insomnia-plugin"
+  ],
+  "dependencies": {
+    "JSONPath": "^0.11.2"
+  }
 }

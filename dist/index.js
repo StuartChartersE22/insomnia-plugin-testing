@@ -13,19 +13,13 @@ function requestHook(context) {
 
 function test_formatter(context) {
     const testConfig = config_1.getTestEnvironmentConfig(context.request);
-    if (!testConfig) {
-        return;
-    }
+    if (!testConfig) return;
     const testRequestsKey = testConfig[config_1.TEST_GROUP_KEY]
     const body = context.request.getBodyText();
     const jsonBody = JSON.parse(body);
-    if (!jsonBody) {
-        return;
-    }
+    if (!jsonBody) return;
     var testRequests = jsonBody[testRequestsKey];
-    if (!testRequests){
-        return;
-    }
+    if (!testRequests) return;
     logger_1.log(`Start testing`);
     var structure_config = testConfig[config_1.RESPONSE_STRUCTURE_KEY];
     if (testConfig[config_1.ASSERTING_KEY]) {
@@ -54,9 +48,7 @@ function send_to_sheet(context) {
     const sheet_option_number = Number(initial_request_url.substring(initial_request_url.indexOf("[") + 1, initial_request_url.indexOf("]")));
     const sheet_config = config_1.getGHelperConfig(initial_request)[sheet_option_number];
     logger_1.log(`sheet_config: ${JSON.stringify(sheet_config)}`);
-    if (!sheet_config) {
-        return;
-    }
+    if (!sheet_config) return;
     logger_1.log(`Start g helper`);
     const sheet_id = sheet_config[config_1.SHEET_ID_KEY];
     var top_left_a1 = "a1"

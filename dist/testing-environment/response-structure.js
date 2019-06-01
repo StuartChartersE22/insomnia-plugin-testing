@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../logger");
-const jsonProcessor = require("../helpers/json-path");
+const JSONPath = require('JSONPath');
 
 function processStructure(testRequests, structureConfig){
     logger_1.log(`Processing test JSON`)
@@ -9,7 +9,7 @@ function processStructure(testRequests, structureConfig){
     Object.entries(testRequests).forEach(([name, testRequest]) => {
         var testRequestResult = {};
         Object.entries(structureConfig).forEach(([key, requiredJsonPath]) => {
-            var result = jsonProcessor.jsonPath(testRequest, requiredJsonPath);
+            var result = JSONPath.eval(testRequest, requiredJsonPath);
             if (result === false) {
                 result = "not present";
             }
