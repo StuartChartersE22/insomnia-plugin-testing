@@ -9,11 +9,11 @@ function processStructure(testRequests, structureConfig){
     Object.entries(testRequests).forEach(([name, testRequest]) => {
         var testRequestResult = {};
         Object.entries(structureConfig).forEach(([key, requiredJsonPath]) => {
-            try {
-                testRequestResult[key] = jsonProcessor.jsonPath(testRequest, requiredJsonPath);
-            } catch (error) {
-                testRequestResult[key] = "";
+            var result = jsonProcessor.jsonPath(testRequest, requiredJsonPath);
+            if (result === false) {
+                result = "not present";
             }
+            testRequestResult[key] = result;
         });
         structuredResponse[name] = testRequestResult;
     });

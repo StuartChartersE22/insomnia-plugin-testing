@@ -49,13 +49,12 @@ function assert_expected(test_results) {
             if (typeof expected_json_path === "undefined") {
                 return;
             }
-            var expected_value;
-            try {
-                expected_value = json_processor.jsonPath(expected_json, expected_json_path);
-            } catch {
-                expected_value = "";
+            var expected_value = json_processor.jsonPath(expected_json, expected_json_path);
+            if (expected_value === false) {
+                expected_value = "not present";
             }
-            test_results[name][`${key}-matches`] = value === expected_value;
+            // logger_1.log(`test: ${JSON.stringify(value)}, expected: ${JSON.stringify(expected_value)}`)
+            test_results[name][`${key}-matches`] = JSON.stringify(value) === JSON.stringify(expected_value);
         });
     });
     return test_results;

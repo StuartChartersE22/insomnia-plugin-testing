@@ -49,7 +49,7 @@ Environment:
 Optional functionality of the test request formatter that allows the value of each field to be compared with another value to see if they are equal. 
 
 ### Usage
-To turn on, the "assert-equality" environment variable is present and set to true. The value of each reference name is set to an array with the JSON to be tested first and a JSON object containing the expected results second.
+To turn on, the "assert-equality" environment variable is present and set to true. The value of each reference name is set to an array with the JSON to be tested first and a JSON object containing the expected results second. If the JSon path for the testing JSON isn't expected to bring anything back, its value will be "not present".
 
 In the test environment configuration As default, the boolean result is added under the each field name with the key "\[field-name\]-matches". There are optional fields to add the expected value into the resopnse with the key "\[field-name\]-expected" or have only the matches evaluation result returned. 
 
@@ -71,9 +71,9 @@ Environment:
         "test-group-key": "Key under which the JSON object of requests sits",
         "assert-equality": true,
         "response-structure": {
-            "field-name1": ["testing JSON path", expected JSON path],
-            "field-name2": ["testing JSON path", expected JSON path],
-            "field-name3": ["testing JSON path", expected JSON path]
+            "field-name1": ["testing JSON path", "expected JSON path"],
+            "field-name2": ["testing JSON path", "expected JSON path"],
+            "field-name3": ["testing JSON path", "expected JSON path"]
         }
     } 
 }
