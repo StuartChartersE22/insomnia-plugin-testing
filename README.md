@@ -51,7 +51,7 @@ Optional functionality of the test request formatter that allows the value of ea
 ### Usage
 To turn on, the "assert-equality" environment variable is present and set to true, and next to the field name an array containing fist a JSON path to extract the value to be tested, and second a JSON path to extract the expected value.
 
-In the body of the request, the value of each reference name is set to an array with the JSON to be tested first and a JSON object containing the expected results second. If no expected value JSON given then no assertions are made for that reference. If the JSON path for the testing JSON isn't expected to bring anything back, its value will be "not present". To assert equality, both results of JSON paths are stringified by JSON and compared through strict equality.
+In the body of the request, the value of each reference name is set to an array with the JSON to be tested first and a JSON object containing the expected results second. If no expected value JSON given then no assertions are made for that reference. If the JSON path for the testing JSON isn't expected to bring anything back, its value will be "not present".
 
 Optional environmental fields:
 
@@ -62,6 +62,11 @@ __"result-reporting":__
 
 __"report-metrics":__
 Set to true wiil add a key of "metrics" under the test group key. The value is a JSON object of "passed-assertions", "failed-assertions", "skipped-values", and "skipped-references" all with totals of those events.
+
+__Equality type__
+There is an optional third argument to the field name to sepcify the type of equality to use:
+- "DEFAULT" (or unexpected value) stringifies the expected and testing results which are compared through strict equality
+- "REGEX" takes the expected value and uses it as a regular expression on the testing value. Both values are expected to be single String arguments
 
 Request:
 
@@ -85,9 +90,9 @@ Environment:
         "result-reporting": "DEFAULT" / "REDUCED" / "VERBOSE", (optional)
         "report-metrics": true, (optional),
         "response-structure": {
-            "field-name1": ["testing JSON path", "expected JSON path"],
-            "field-name2": ["testing JSON path", "expected JSON path"],
-            "field-name3": ["testing JSON path", "expected JSON path"]
+            "field-name1": ["testing JSON path", "expected JSON path" (, "DEFAULT" / "REGEX")],
+            "field-name2": ["testing JSON path", "expected JSON path" (, "DEFAULT" / "REGEX")],
+            "field-name3": ["testing JSON path", "expected JSON path" (, "DEFAULT" / "REGEX")]
         }
     } 
 }
