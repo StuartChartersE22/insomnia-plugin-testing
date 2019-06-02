@@ -56,14 +56,17 @@ In the body of the request, the value of each reference name is set to an array 
 Optional environmental fields:
 
 __"result-reporting":__
+
 - "DEFAULT" (or unexpected value) returns the unspecified behaviour. The boolean result is added with the key "\[field-name\]-matches".
 - "REDUCED" only reports "\[field-name\]-matches"
 - "VERBOSE" returns the expected value under the key "\[field-name\]-expected".  
 
 __"report-metrics":__
+
 Set to true wiil add a key of "metrics" under the test group key. The value is a JSON object of "passed-assertions", "failed-assertions", "skipped-values", and "skipped-references" all with totals of those events.
 
 __Equality type__
+
 There is an optional third argument to the field name to sepcify the type of equality to use:
 - "DEFAULT" (or unexpected value) stringifies the expected and testing results which are compared through strict equality
 - "REGEX" takes the expected value and uses it as a regular expression on the testing value. Both values are expected to be single String arguments
@@ -88,7 +91,7 @@ Environment:
         "test-group-key": "Key under which the JSON object of requests sits",
         "assert-equality": true,
         "result-reporting": "DEFAULT" / "REDUCED" / "VERBOSE", (optional)
-        "report-metrics": true, (optional),
+        "report-metrics": true, (optional)
         "response-structure": {
             "field-name1": ["testing JSON path", "expected JSON path" (, "DEFAULT" / "REGEX")],
             "field-name2": ["testing JSON path", "expected JSON path" (, "DEFAULT" / "REGEX")],
