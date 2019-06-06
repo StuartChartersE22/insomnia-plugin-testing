@@ -151,7 +151,7 @@ The end point must be set to PUT "g-sheet-request\[setting option number\]" for 
         },
         {
             "sheet-id": "String2",
-            "top-left-coord": "C4" (optional)
+            "top-left-coord": "Sheet1!C4" (optional)
         }
     ]
 }
