@@ -170,7 +170,6 @@ You have a collection of requests that you have been using to test an end point 
 
 3. Using the key defined in the TEST_ENV (in this case "test-group"), construct a JSON value with each key being a meaningful description of each request and the value being a Response hook with response reference type "Raw Body" to the corresponding request. If you have run the requests before, there will be a stored result from the previous call and the hook will be blue. Setting the "trigger behaviour" to always will ensure that the request will be sent again and the latest response returned.
 ![Screenshot of insomnia with a root JSON key set to test-group. The JSON value of that key has the keys: Request 1, Request 2, and Request 3; and the corresponding response hooks as values](./screenshots/example_1_step_3.1.png)
-
 ![Screenshot showing the settings screen for the response hook](./screenshots/example_1_step_3.2.png)
 
 4. Clicking send will now trigger the referenced requests to be sent in order from top to bottom and the response JSON to be formed. For this example, the posted result will be:
