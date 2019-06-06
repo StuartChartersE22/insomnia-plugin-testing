@@ -7,7 +7,7 @@
 
 # Goal
 
-This plugin is designed to provide a group of functionality that can be configured and used to help test single or multiple requests that are stored in a your Insomnia environment. The functionality can also be used seperately to enhance the overall usage of Insomnia.
+This plugin is designed to provide a group of functionality that can be configured and used to help test single or multiple requests that are stored in your Insomnia environment. The functionality can also be used seperately to enhance the overall usage of Insomnia.
 
 # Test Request Formatter
 
@@ -49,7 +49,7 @@ Environment:
 Optional functionality of the test request formatter that allows the value of each field to be compared with another value to see if they are equal. 
 
 ### Usage
-To turn on, the "assert-equality" environment variable is present and set to true, and next to the field name an array containing fist a JSON path to extract the value to be tested, and second a JSON path to extract the expected value.
+To turn on, the "assert-equality" environment variable is present and set to true, and next to the field name an array containing first, a JSON path to extract the value to be tested and second, a JSON path to extract the expected value.
 
 In the body of the request, the value of each reference name is set to an array with the JSON to be tested first and a JSON object containing the expected results second. If no expected value JSON given then no assertions are made for that reference. If the JSON path for the testing JSON isn't expected to bring anything back, its value will be "not present".
 
@@ -168,7 +168,7 @@ You have a collection of requests that you have been using to test an end point 
 2. Set up the environment variables. For this example we want to return the whole response so the JSON path is just "$".
 ![Screenshot of the insomnia manage environment window with the TEST_ENV JSON defined. The test-group-key has a value of test-group and the response-structure has the key of result and the value of $ as the JSON path](./screenshots/example_1_step_2.png)
 
-3. Using the key defined in the TEST_ENV (in this case "test-group"), construct a JSON value with each key being a meaningful description of each request and the value being a Response hook with response reference type "Raw Body" to the corresponding request. If you have run the requests before, there will be a stored result from the previous call and the hook will be blue. Setting the "trigger behaviour" to always will ensure that the request will be sent again and the latest response returned.
+3. Using the key defined in the TEST_ENV (in this case "test-group"), construct a JSON value with each key being a meaningful description of each request and the value being a Response hook with response reference type "Raw Body" to the corresponding request. If you have run the requests before, there will be a stored result from the previous call and the hook will be blue. Setting the "trigger behaviour" to "Always" will ensure that the request will be sent again and the latest response returned.
 ![Screenshot of insomnia with a root JSON key set to test-group. The JSON value of that key has the keys: Request 1, Request 2, and Request 3; and the corresponding response hooks as values](./screenshots/example_1_step_3.1.png)
 ![Screenshot showing the settings screen for the response hook](./screenshots/example_1_step_3.2.png)
 
