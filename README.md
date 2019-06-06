@@ -157,9 +157,9 @@ The end point must be set to PUT "g-sheet-request\[setting option number\]" for 
 }
 ```
 
-## Examples
+# Examples
 
-### Example 1:
+## Example 1:
 You have a collection of requests that you have been using to test an end point of your API. You have changed the behaviour of that end point and you want to see what each request now returns:
 
 1. Set up a request that will post your final result to a service to record.
@@ -177,13 +177,42 @@ You have a collection of requests that you have been using to test an end point 
 {
     "test-group":{
         "Request 1": {
-            "Result": "[Request 1 JSON response]"
+            "Result": "Request 1 JSON response"
         },
         "Request 2": {
-            "Result": "[Request 2 JSON response]"
+            "Result": "Request 2 JSON response"
         },
         "Request 3": {
-            "Result": "[Request 3 JSON response]"
+            "Result": "Request 3 JSON response"
+        }
+    }
+}
+```
+
+## Example 2:
+Taking the same situation as above but the response you get back from your end point is quite large. You are quite confident that only a couple of values in your response will be changed. These results can be filered out and returned using the JSON path in the TEST_ENV:
+
+1. Returning to the Insomnia environments variables, the "response-structure" can be modified to give a more refined result. In this example, simple JSON paths have been specified but this works with the full functionality of JSON path.
+![Screenshot showing the edited TEST_ENV. The keys now reflect the naming of the JSON paths defined](./screenshots/example_2_step_1.png)
+
+2. Now sending this request will send a JSON body similar to the old one but now, rather than the whole response under a single key for each reference, there are multiple keys with smaller, more focused values retrieved by the JSON paths. For this example, the posted result will be:
+```
+{
+    "test-group": {
+        "Request 1": {
+            "Children": "$..child result for Request 1",
+            "Name": "$.Name result for Request 1",
+            "Version": "$.metadata.version result for Request 1"
+        },
+        "Request 2": {
+            "Children": "$..child result for Request 2",
+            "Name": "$.Name result for Request 2",
+            "Version": "$.metadata.version result for Request 2"
+        },
+        "Request 3": {
+            "Children": "$..child result for Request 3",
+            "Name": "$.Name result for Request 3",
+            "Version": "$.metadata.version result for Request 3"
         }
     }
 }
