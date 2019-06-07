@@ -227,7 +227,7 @@ You want to perform the previous example but you don't have an end point that yo
 ![Screenshot of the Insomnia environment variables. Under the G_SHEET_HELPER there is an array of one with an example ID](./screenshots/example_3_step_2.png)
 
 3. The sheet can be targeted by putting "g-sheet-request\[0\]" in the URL field with a PUT as the method.
-![Screenshot showing the URL set to g-sheet-request 0 with http verb PUT](./example_3_step_3.png)
+![Screenshot showing the URL set to g-sheet-request 0 with http verb PUT](./screenshots/example_3_step_3.png)
 
 4. Sending the request now will update the sheet with the results. For this I have assumed that the children JSON path returns an array.
 ![Screenshot of the Google Sheet with the results in the format illsutrated in the usage section](./screenshots/example_3_step_4.png)
