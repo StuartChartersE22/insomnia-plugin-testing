@@ -163,16 +163,21 @@ The end point must be set to PUT "g-sheet-request\[setting option number\]" for 
 You have a collection of requests that you have been using to test an end point of your API. You have changed the behaviour of that end point and you want to see what each request now returns:
 
 1. Set up a request that will post your final result to a service to record.
+
 ![Screenshot of insomnia with 3 pre-setup requests and one that is being worked on. The URL has an example URL that the response would be posted to](./screenshots/example_1_step_1.png)
 
 2. Set up the environment variables. For this example we want to return the whole response so the JSON path is just "$".
+
 ![Screenshot of the insomnia manage environment window with the TEST_ENV JSON defined. The test-group-key has a value of test-group and the response-structure has the key of result and the value of $ as the JSON path](./screenshots/example_1_step_2.png)
 
 3. Using the key defined in the TEST_ENV (in this case "test-group"), construct a JSON value with each key being a meaningful description of each request and the value being a Response hook with response reference type "Raw Body" to the corresponding request. If you have run the requests before, there will be a stored result from the previous call and the hook will be blue. Setting the "trigger behaviour" to "Always" will ensure that the request will be sent again and the latest response returned.
+
 ![Screenshot of insomnia with a root JSON key set to test-group. The JSON value of that key has the keys: Request 1, Request 2, and Request 3; and the corresponding response hooks as values](./screenshots/example_1_step_3.1.png)
+
 ![Screenshot showing the settings screen for the response hook](./screenshots/example_1_step_3.2.png)
 
 4. Clicking send will now trigger the referenced requests to be sent in order from top to bottom and the response JSON to be formed. For this example, the posted result will be:
+
 ```
 {
     "test-group":{
@@ -193,9 +198,11 @@ You have a collection of requests that you have been using to test an end point 
 Taking the same situation as above but the response you get back from your end point is quite large. You are quite confident that only a couple of values in your response will be changed. These results can be filered out and returned using the JSON path in the TEST_ENV:
 
 1. Returning to the Insomnia environments variables, the "response-structure" can be modified to give a more refined result. In this example, simple JSON paths have been specified but this works with the full functionality of JSON path.
+
 ![Screenshot showing the edited TEST_ENV. The keys now reflect the naming of the JSON paths defined](./screenshots/example_2_step_1.png)
 
 2. Now sending this request will send a JSON body similar to the old one but now, rather than the whole response under a single key for each reference, there are multiple keys with smaller, more focused values retrieved by the JSON paths. For this example, the posted result will be:
+
 ```
 {
     "test-group": {
@@ -224,10 +231,13 @@ You want to perform the previous example but you don't have an end point that yo
 1. Before setting up the Insomnia environment variables, make sure you have [authorised your Google API](https://developers.google.com/sheets/api/guides/authorizing "Google Sheet's Authorisation") to allow updating to Google Sheets and the [OAuth token is setup in Insomnia](https://insomnia.rest/blog/oauth2-github-api/ "Insomnia OAuth setup").
 
 2. Now configure the environmental variables to refer to the sheet you want to see the results in.
+
 ![Screenshot of the Insomnia environment variables. Under the G_SHEET_HELPER there is an array of one with an example ID](./screenshots/example_3_step_2.png)
 
 3. The sheet can be targeted by putting "g-sheet-request\[0\]" in the URL field with a PUT as the method.
+
 ![Screenshot showing the URL set to g-sheet-request 0 with http verb PUT](./screenshots/example_3_step_3.png)
 
 4. Sending the request now will update the sheet with the results. For this I have assumed that the children JSON path returns an array.
+
 ![Screenshot of the Google Sheet with the results in the format illsutrated in the usage section](./screenshots/example_3_step_4.png)
