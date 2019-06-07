@@ -217,3 +217,17 @@ Taking the same situation as above but the response you get back from your end p
     }
 }
 ```
+
+## Example 3:
+You want to perform the previous example but you don't have an end point that you want to post the results to. A useful place to display the results would be in a Google Sheet. Configuring the Google Sheet Helper will allow you to send the results to a sheet in your drive without worrying about formatting the JSON:
+
+1. Before setting up the Insomnia environment variables, make sure you have [authorised your Google API](https://developers.google.com/sheets/api/guides/authorizing "Google Sheet's Authorisation") to allow updating to Google Sheets and the [OAuth token is setup in Insomnia](https://insomnia.rest/blog/oauth2-github-api/ "Insomnia OAuth setup").
+
+2. Now configure the environmental variables to refer to the sheet you want to see the results in.
+![Screenshot of the Insomnia environment variables. Under the G_SHEET_HELPER there is an array of one with an example ID](./screenshots/example_3_step_2.png)
+
+3. The sheet can be targeted by putting "g-sheet-request\[0\]" in the URL field with a PUT as the method.
+![Screenshot showing the URL set to g-sheet-request 0 with http verb PUT](./example_3_step_3.png)
+
+4. Sending the request now will update the sheet with the results. For this I have assumed that the children JSON path returns an array.
+![Screenshot of the Google Sheet with the results in the format illsutrated in the usage section](./screenshots/example_3_step_4.png)
