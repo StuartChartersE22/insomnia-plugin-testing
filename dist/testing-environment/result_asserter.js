@@ -89,7 +89,6 @@ function reset_properties() {
 function extract_details_from_body(request_json) {
     var testing_json = {};
     Object.entries(request_json).forEach(([key, assertion_array]) => {
-        logger_1.log(`assertion_array.length: ${assertion_array.length}`)
         switch (assertion_array.length) {
             case 2:
                 try {

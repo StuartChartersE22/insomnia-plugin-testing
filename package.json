@@ -1,6 +1,6 @@
 {
   "name": "insomnia-plugin-testing",
-  "version": "3.3.3",
+  "version": "3.3.4",
   "description": "An Insomnia plugin for a testing environment through chaining requests",
   "main": "dist/index.js",
   "files": [

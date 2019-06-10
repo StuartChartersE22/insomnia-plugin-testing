@@ -12,6 +12,8 @@ exports.G_HELPER_KEY = "G_SHEET_HELPER";
 exports.SHEET_ID_KEY = "sheet-id";
 exports.TOP_LEFT_COORD_KEY = "top-left-coord";
 
+exports.G_HELPER_REQUEST_REGEX = /^http:\/\/g\-sheet\-request\[\d+\]$/i;
+
 function getTestEnvironmentConfig(request) {
     let config = request.getEnvironmentVariable(exports.TEST_ENVIRONMENT_KEY);
     return config;

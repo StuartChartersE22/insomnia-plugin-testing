@@ -42,12 +42,11 @@ function test_formatter(context) {
 function send_to_sheet(context) {
     const initial_request = context.request;
     const initial_request_url = initial_request.getUrl();
-    if (!initial_request_url.match(/^http:\/\/g\-sheet\-request\[\d+\]$/i)) {
+    if (!initial_request_url.match(config_1.G_HELPER_REQUEST_REGEX)) {
         return;
     }
     const sheet_option_number = Number(initial_request_url.substring(initial_request_url.indexOf("[") + 1, initial_request_url.indexOf("]")));
     const sheet_config = config_1.getGHelperConfig(initial_request)[sheet_option_number];
-    logger_1.log(`sheet_config: ${JSON.stringify(sheet_config)}`);
     if (!sheet_config) return;
     logger_1.log(`Start g helper`);
     const sheet_id = sheet_config[config_1.SHEET_ID_KEY];
