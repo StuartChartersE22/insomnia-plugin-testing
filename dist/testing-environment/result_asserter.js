@@ -56,7 +56,8 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
             switch (assertion_type) {
                 case "REGEX":
                     try {
-                        assertion_result = Boolean(value[0].match(`/${expected_value[0]}/`));
+                        const regex = new RegExp(expected_value[0]);
+                        assertion_result = Boolean(value[0].match(regex));
                     } catch {
                         assertion_result = false;
                     }
