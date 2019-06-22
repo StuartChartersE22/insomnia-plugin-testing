@@ -15,9 +15,13 @@ function test_formatter(context) {
     const testConfig = config_1.getTestEnvironmentConfig(context.request);
     if (!testConfig) return;
     const testRequestsKey = testConfig[config_1.TEST_GROUP_KEY]
-    const body = context.request.getBodyText();
-    const jsonBody = JSON.parse(body);
-    if (!jsonBody) return;
+    var jsonBody;
+    try {
+        const body = context.request.getBodyText();
+        jsonBody = JSON.parse(body);
+    } catch{
+        return;
+    }
     var testRequests = jsonBody[testRequestsKey];
     if (!testRequests) return;
     logger_1.log(`Start testing`);
@@ -54,9 +58,11 @@ function send_to_sheet(context) {
     if (sheet_config[config_1.TOP_LEFT_COORD_KEY]){
         top_left_a1 = sheet_config[config_1.TOP_LEFT_COORD_KEY].toLowerCase();
     }
-    const body = initial_request.getBodyText();
-    const json_body = JSON.parse(body);
-    if (!json_body) {
+    var json_body;
+    try{
+        const body = initial_request.getBodyText();
+        json_body = JSON.parse(body);
+    } catch {
         logger_1.log(`Body needs to be in a JSON format. Unable to parse`)
         return;
     }
