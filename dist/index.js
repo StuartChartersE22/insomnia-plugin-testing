@@ -20,6 +20,7 @@ function test_formatter(context) {
     try {
         body = context.request.getBodyText();
     } catch{
+        logger_1.log(`can't get body text`)
         return;
     }
     try {
