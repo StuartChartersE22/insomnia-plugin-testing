@@ -15,11 +15,17 @@ function test_formatter(context) {
     const testConfig = config_1.getTestEnvironmentConfig(context.request);
     if (!testConfig) return;
     const testRequestsKey = testConfig[config_1.TEST_GROUP_KEY]
+    var body;
     var jsonBody;
     try {
-        const body = context.request.getBodyText();
-        jsonBody = JSON.parse(body);
+        body = context.request.getBodyText();
     } catch{
+        return;
+    }
+    try {
+        jsonBody = JSON.parse(body);
+    } catch {
+        logger_1.log(`Couldn't parse body to JSON`)
         return;
     }
     var testRequests = jsonBody[testRequestsKey];
