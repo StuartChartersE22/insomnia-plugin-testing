@@ -72,6 +72,8 @@ There is an optional third argument to the field name to sepcify the type of equ
 - "REGEX" takes the expected value and uses it as a regular expression on the testing value. Both values are expected to be single String arguments
 - "CONTAINS" takes the expected value and sees if the testing value contains it. If the expected value is an array, it takes each element in turn and sees if it is contained. Order is not checked.
 
+These can all be prefixed with "NOT" which will invert the assertion.
+
 Request:
 
 ```
@@ -94,9 +96,9 @@ Environment:
         "result-reporting": "DEFAULT" / "REDUCED" / "VERBOSE", (optional)
         "report-metrics": true, (optional)
         "response-structure": {
-            "field-name1": ["testing JSON path", "expected JSON path" (, "DEFAULT" / "REGEX")],
-            "field-name2": ["testing JSON path", "expected JSON path" (, "DEFAULT" / "REGEX")],
-            "field-name3": ["testing JSON path", "expected JSON path" (, "DEFAULT" / "REGEX")]
+            "field-name1": ["testing JSON path", "expected JSON path" (, "DEFAULT" / "REGEX" / "CONTAINS")],
+            "field-name2": ["testing JSON path", "expected JSON path" (, "DEFAULT" / "REGEX" / "CONTAINS")],
+            "field-name3": ["testing JSON path", "expected JSON path" (, "DEFAULT" / "REGEX" / "CONTAINS")]
         }
     } 
 }

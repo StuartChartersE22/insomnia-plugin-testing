@@ -31,7 +31,7 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
         }
         Object.entries(results).forEach(([key, value]) => {
             const expected_json_path = expected_json_path_json[key];
-            const assertion_type = assertion_types[key];
+            var assertion_type = assertion_types[key];
             if (typeof expected_json_path === "undefined") {
                 skipped_values ++;
                 return;
@@ -41,7 +41,6 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                 skipped_values ++;
                 return;
             }
-            // logger_1.log(`test: ${JSON.stringify(value)}, expected: ${JSON.stringify(expected_value)}`)
             if (reporting_mode) {
                 switch (reporting_mode.toUpperCase()) {
                     case "REDUCED":
@@ -54,6 +53,11 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                 }
             }
             var assertion_result = true;
+            var invert = false;
+            if (assertion_type.includes("NOT ")) {
+                assertion_type = assertion_type.replace("NOT ", "");
+                invert = true;
+            }
             if (value == "") {
                 assertion_result = expected_value[0] == "not present";
             } else {
@@ -91,6 +95,10 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                     default:
                         assertion_result = JSON.stringify(value) === JSON.stringify(expected_value);
                 }
+            }
+            logger_1.log(`assertion_type: ${assertion_type}\nincludes not: ${assertion_type.includes("NOT ")}\nassertion_result: ${assertion_result}\nInvert: ${invert}`)
+            if (invert) {
+                assertion_result = !assertion_result;
             }
             test_results[name][`${key}-matches`] = assertion_result;
             assertion_result ? passed_assertions ++ : failed_assertions ++;
