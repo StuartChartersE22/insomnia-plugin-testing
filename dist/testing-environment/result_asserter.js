@@ -37,8 +37,9 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                 return;
             }
             var expected_value = JSONPath.eval(expected_json, expected_json_path);
-            if (expected_value === false) {
-                expected_value = "not present";
+            if (expected_value == "") {
+                skipped_values ++;
+                return;
             }
             // logger_1.log(`test: ${JSON.stringify(value)}, expected: ${JSON.stringify(expected_value)}`)
             if (reporting_mode) {
@@ -52,18 +53,44 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                         break;
                 }
             }
-            var assertion_result;
-            switch (assertion_type) {
-                case "REGEX":
-                    try {
-                        const regex = new RegExp(expected_value[0]);
-                        assertion_result = Boolean(value[0].match(regex));
-                    } catch {
-                        assertion_result = false;
-                    }
-                    break;
-                default:
-                    assertion_result = JSON.stringify(value) === JSON.stringify(expected_value);
+            var assertion_result = true;
+            if (value == "") {
+                assertion_result = expected_value[0] == "not present";
+            } else {
+                switch (assertion_type) {
+                    case "REGEX":
+                        try {
+                            const regex = new RegExp(expected_value[0]);
+                            assertion_result = Boolean(value[0].match(regex));
+                        } catch {
+                            assertion_result = false;
+                        }
+                        break;
+                    case "CONTAINS":
+                        try {
+                            const actual_value_array = [];
+                            const comparison_array = [];
+                            value.forEach(entry => actual_value_array.push(entry));
+                            expected_value.forEach(entry => {
+                                try {
+                                    entry.forEach(sub_entry => comparison_array.push(sub_entry));
+                                } catch {
+                                    comparison_array.push(entry)
+                                }
+                            });
+                            var i = 0;
+                            while (i < comparison_array.length && assertion_result) {
+                                const comparison_value = comparison_array[i];
+                                assertion_result = actual_value_array.includes(comparison_value);
+                                i++;
+                            }
+                        } catch {
+                            assertion_result = false;
+                        }
+                        break;
+                    default:
+                        assertion_result = JSON.stringify(value) === JSON.stringify(expected_value);
+                }
             }
             test_results[name][`${key}-matches`] = assertion_result;
             assertion_result ? passed_assertions ++ : failed_assertions ++;

@@ -51,7 +51,7 @@ Optional functionality of the test request formatter that allows the value of ea
 ### Usage
 To turn on, the "assert-equality" environment variable is present and set to true, and next to the field name an array containing first, a JSON path to extract the value to be tested and second, a JSON path to extract the expected value.
 
-In the body of the request, the value of each reference name is set to an array with the JSON to be tested first and a JSON object containing the expected results second. If no expected value JSON given then no assertions are made for that reference. If the JSON path for the testing JSON isn't expected to bring anything back, its value will be "not present".
+In the body of the request, the value of each reference name is set to an array with the JSON to be tested first and a JSON object containing the expected results second. If no expected value JSON given then no assertions are made for that reference. If the JSON path for the testing JSON isn't expected to bring anything back or an empty string, the expected value should be set to "not present".
 
 Optional environmental fields:
 
@@ -70,6 +70,7 @@ __Equality type__
 There is an optional third argument to the field name to sepcify the type of equality to use:
 - "DEFAULT" (or unexpected value) stringifies the expected and testing results which are compared through strict equality
 - "REGEX" takes the expected value and uses it as a regular expression on the testing value. Both values are expected to be single String arguments
+- "CONTAINS" takes the expected value and sees if the testing value contains it. If the expected value is an array, it takes each element in turn and sees if it is contained. Order is not checked.
 
 Request:
 
