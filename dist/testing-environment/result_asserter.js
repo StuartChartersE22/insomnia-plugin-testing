@@ -12,7 +12,6 @@ function extract_assertion_details(request_json, structure_config){
     reset_properties();
     const testing_json = extract_details_from_body(request_json);
     const testing_json_paths = extract_details_from_config(structure_config);
-    // logger_1.log(`expected_json_structure: ${JSON.stringify(expected_json_structure)}\nexpected_json_path_json: ${JSON.stringify(expected_json_path_json)}\nassertion_types: ${JSON.stringify(assertion_types)}`)
     logger_1.log(`Assertion details extracted`);
     return [testing_json, testing_json_paths];
 }
@@ -96,7 +95,6 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                         assertion_result = JSON.stringify(value) === JSON.stringify(expected_value);
                 }
             }
-            logger_1.log(`assertion_type: ${assertion_type}\nincludes not: ${assertion_type.includes("NOT ")}\nassertion_result: ${assertion_result}\nInvert: ${invert}`)
             if (invert) {
                 assertion_result = !assertion_result;
             }
