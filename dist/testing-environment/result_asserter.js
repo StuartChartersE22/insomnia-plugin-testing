@@ -51,7 +51,7 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                         break;
                 }
             }
-            var assertion_result = true;
+            var assertion_result;
             var invert = false;
             if (assertion_type.includes("NOT ")) {
                 assertion_type = assertion_type.replace("NOT ", "");
@@ -69,7 +69,7 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                             assertion_result = false;
                         }
                         break;
-                    case "CONTAINS":
+                    case "CONTAINS" || "CONTAINS ALL" || "CONTAINS ONE":
                         try {
                             const actual_value_array = [];
                             const comparison_array = [];
@@ -82,7 +82,15 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                                 }
                             });
                             var i = 0;
-                            while (i < comparison_array.length && assertion_result) {
+                            var continue_state;
+                            if (assertion_type === "CONTAINS ONE") {
+                                assertion_result = false;
+                                continue_state = false;
+                            } else {
+                                assertion_result = true;
+                                continue_state = true;
+                            }
+                            while (i < comparison_array.length && assertion_result === continue_state) {
                                 const comparison_value = comparison_array[i];
                                 assertion_result = actual_value_array.includes(comparison_value);
                                 i++;

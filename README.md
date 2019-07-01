@@ -70,7 +70,8 @@ __Equality type__
 There is an optional third argument to the field name to sepcify the type of equality to use:
 - "DEFAULT" (or unexpected value) stringifies the expected and testing results which are compared through strict equality
 - "REGEX" takes the expected value and uses it as a regular expression on the testing value. Both values are expected to be single String arguments
-- "CONTAINS" takes the expected value and sees if the testing value contains it. If the expected value is an array, it takes each element in turn and sees if it is contained. Order is not checked.
+- "CONTAINS" or "CONTAINS ALL" takes the expected value and sees if the testing value contains it. If the expected value is an array, it takes each element in turn and sees if it is contained. As soon as one value isn't contained, the assertion will be false. Order is not checked.
+- "CONTAINS ONE" works in the same way as "CONTAINS" and "CONTAINS ALL" but as soon as one value is present in the testing value, the assertion will be true.
 
 These can all be prefixed with "NOT" which will invert the assertion.
 
