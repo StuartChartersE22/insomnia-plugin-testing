@@ -69,7 +69,9 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                             assertion_result = false;
                         }
                         break;
-                    case "CONTAINS" || "CONTAINS ALL" || "CONTAINS ONE":
+                    case "CONTAINS":
+                    case "CONTAINS ALL":
+                    case "CONTAINS ONE":
                         try {
                             const actual_value_array = [];
                             const comparison_array = [];
@@ -83,7 +85,7 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                             });
                             var i = 0;
                             var continue_state;
-                            if (assertion_type === "CONTAINS ONE") {
+                            if (assertion_type == "CONTAINS ONE") {
                                 assertion_result = false;
                                 continue_state = false;
                             } else {
