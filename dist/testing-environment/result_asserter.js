@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = require("../logger");
-const JSONPath = require('JSONPath');
+const JSONPath = require("JSONPath");
+const assertion_method = require("./assertion_methods")
 
 var expected_json_structure;
 var expected_json_path_json;
@@ -58,46 +59,34 @@ function assert_expected(test_results, reporting_mode, report_metrics) {
                 invert = true;
             }
             if (value == "") {
-                assertion_result = expected_value[0] == "not present";
+                if (assertion_type === "CONTAINS ALL" || assertion_type === "CONTAINS"){
+                    assertion_result = expected_value[0] == "not present";
+                } else {
+                    assertion_result = assertion_method.not_present(expected_value[0]);
+                }
             } else {
                 switch (assertion_type) {
                     case "REGEX":
-                        try {
-                            const regex = new RegExp(expected_value[0]);
-                            assertion_result = Boolean(value[0].match(regex));
-                        } catch {
-                            assertion_result = false;
-                        }
+                        assertion_result = assertion_method.regex(value[0], expected_value[0]);
                         break;
                     case "CONTAINS":
                     case "CONTAINS ALL":
+                        try {
+                            const actual_value_array = form_actual_value_array(value);
+                            const comparison_array = form_comparison_array(expected_value);
+                            assertion_result = assertion_method.containsAll(actual_value_array, comparison_array);
+                        } catch {
+                            logger_1.log(`error contains all`);
+                            assertion_result = false;
+                        }
+                           break;
                     case "CONTAINS ONE":
                         try {
-                            const actual_value_array = [];
-                            const comparison_array = [];
-                            value.forEach(entry => actual_value_array.push(entry));
-                            expected_value.forEach(entry => {
-                                try {
-                                    entry.forEach(sub_entry => comparison_array.push(sub_entry));
-                                } catch {
-                                    comparison_array.push(entry)
-                                }
-                            });
-                            var i = 0;
-                            var continue_state;
-                            if (assertion_type == "CONTAINS ONE") {
-                                assertion_result = false;
-                                continue_state = false;
-                            } else {
-                                assertion_result = true;
-                                continue_state = true;
-                            }
-                            while (i < comparison_array.length && assertion_result === continue_state) {
-                                const comparison_value = comparison_array[i];
-                                assertion_result = actual_value_array.includes(comparison_value);
-                                i++;
-                            }
+                            const actual_value_array = form_actual_value_array(value);
+                            const comparison_array = form_comparison_array(expected_value);
+                            assertion_result = assertion_method.containsOne(actual_value_array, comparison_array);
                         } catch {
+                            logger_1.log(`error contains one`);
                             assertion_result = false;
                         }
                         break;
@@ -165,4 +154,22 @@ function extract_details_from_config(structure_config) {
         }
     });
     return testing_json_paths;
+}
+
+function form_comparison_array(expected_value){
+    const comparison_array = [];
+    expected_value.forEach(entry => {
+        try {
+            entry.forEach(sub_entry => comparison_array.push(sub_entry));
+        } catch {
+            comparison_array.push(entry)
+        }
+    });
+    return comparison_array;
+}
+
+function form_actual_value_array(actual_value){
+    const actual_value_array = [];
+    actual_value.forEach(entry => actual_value_array.push(entry));
+    return actual_value_array;
 }
